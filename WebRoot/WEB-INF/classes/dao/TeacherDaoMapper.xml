@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TeacherDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 登录入口 -->
+	<select id="query_tea" resultType="entity.Teacher" parameterType="java.lang.String">
+		select * from teacher where teacher_name = #{0}
+	</select>
+
+	<!-- 插入信息 -->
+	<insert id="add_tea" parameterType="entity.Teacher" keyProperty="teacher_id">
+		insert into
+		teacher(teacher_name,teacher_position,teacher_cell,teacher_college,teacher_score,)
+		values(#{teacher_name},#{teacher_position},#{teacher_cell},#{teacher_college},#{teacher_score})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_tea" parameterType="entity.Teacher">
+		update teacher
+		<set>
+			<if test="teacher_position ! = null">
+				teacher_position = #{teacher_position}
+    </if>
+			<if test="teacher_score">
+				teacher_score = #{teacher_score}
+    </if>
+			<if test="teacher_cell">
+				teacher_cell = #{teacher_cell}
+    </if>
+		</set>
+		<where>
+			teacher_id = #{teacher_id}
+    </where>
+	</update>
+</mapper>

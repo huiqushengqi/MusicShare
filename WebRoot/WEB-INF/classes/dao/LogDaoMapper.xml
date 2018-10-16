@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.LogDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 查询学生信息 -->
+	<select id="all_log" resultType="entity.Log">
+		select * from log
+		<where>
+			<if test="log_name ! = null">
+				log_name = #{log_name}
+	</if>
+			<if test="log_tea ! = null">
+				log_tea = #{log_tea}
+	</if>
+			<if test="log_time ! = null">
+				log_time = #{log_time}
+	</if>
+		</where>
+	</select>
+	<!-- 插入信息 -->
+	<insert id="add_log" parameterType="entity.Log"
+		keyProperty="log_id">
+		insert into log(log_time,log_content,log_tea,log_name)
+		values(#{log_time},#{log_content},#{log_tea},#{log_name})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_log" parameterType="entity.Log">
+		update log
+		<set>
+			<if test="log_name ! = null">
+				log_name = #{log_name}
+      </if>
+			<if test="log_time ! = null">
+				log_time = #{log_time}
+      </if>
+      		<if test="log_content ! = null">
+      			log_content = #{log_content}
+      </if>
+		</set>
+		<where>
+			<if test="log_id ! = null">
+				log_id = #{log_id}
+     </if>
+		</where>
+	</update>
+</mapper>

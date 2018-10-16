@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 查询学生信息 -->
+	<select id="all_stu" resultType="entity.Student" parameterType="int">
+		select * from student limit #{0},#{1} 
+	</select>
+	<!-- 插入信息 -->
+	<insert id="add_stu" parameterType="entity.Student" keyProperty="student_id">
+		insert into
+		student(stu_name,stu_class,stu_addr,stu_position,stu_num,student_remarks,stu_status)
+		values(#{stu_name},#{stu_class},#{stu_addr},#{stu_position},#{stu_num},#{stu_remarks},#{stu_status})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_stu" parameterType="entity.Student">
+		update student set stu_position = #{stu_position},stu_status = #{stu_status},stu_remarks = #{stu_remarks},stu_addr = #{stu_addr} where stu_num = #{stu_num}
+	</update>
+	<select id="query_stu_id" resultType="entity.Student">
+		select * from student where
+		stu_id = #{0}
+	
+	</select>
+	<select id="query_stu" resultType="entity.Student">
+		select * from student where
+		stu_num = #{0} and stu_name = #{1} and
+		stu_status = #{2}
+	
+	</select>
+	<select id="query_stu_num" resultType="int">
+		select count(stu_id) from
+		student
+	</select>
+</mapper>

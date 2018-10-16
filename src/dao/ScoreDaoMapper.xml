@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TeacherDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 查询入口 -->
+	<select id="all_score" resultType="entity.Score">
+		select * from score
+	</select>
+	<!-- 插入信息 -->
+	<insert id="add_score" parameterType="entity.Score" keyProperty="score_id">
+		insert into score(score_frac,score_course,score_stunum)
+		values(#{score_frac},#{score_course},#{score_stunum}) 
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_score" parameterType="entity.Score">
+		update score
+		<set>
+			<if test="score_frac ! = null">
+				score_frac = #{score_frac}
+    </if>
+			<if test="score_re ! = null">
+				score_re = #{score_re}
+    </if>
+			<if test="score_up ! = null">
+				score_up = #{score_up}
+    </if>
+		</set>
+		<where>
+			score_stunum = #{score_stunum}
+    </where>
+	</update>
+</mapper>

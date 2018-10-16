@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.SClassDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 查询学生信息 -->
+	<select id="all_class" resultType="entity.SClass">
+		select * from class
+		<where>
+			<if test="class_name ! = null">
+				class_name = #{class_name}
+	</if>
+			<if test="class_tea ! = null">
+				class_tea = #{class_tea}
+	</if>
+		</where>
+	</select>
+	<!-- 插入信息 -->
+	<insert id="add_class" parameterType="entity.SClass"
+		keyProperty="class_id">
+		insert into class(class_name,class_head,class_people,class_starttime)
+		values(#{class_name},#{class_head},#{class_people},#{class_starttime})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_class" parameterType="entity.SClass">
+		update student
+		<set>
+			<if test="class_head ! = null">
+				class_head = #{class_head}
+      </if>
+			<if test="class_people ! = null">
+				class_people = #{class_people}
+      </if>
+			<if test="class_name ! = null">
+				class_name = #{class_name}
+      </if>
+		</set>
+		<where>
+			<if test="class_id ! = null">
+				class_id = #{class_id}
+     </if>
+		</where>
+	</update>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MeetingDao">
+
+	<!-- 全表查询 -->
+	<!-- 属性名与列名不一致，解决方案，查询的时候取别名，或者用resultMap -->
+	<!-- 查询学生信息 -->
+	<select id="all_meeting" resultType="entity.Meeting">
+		select * from meeting
+		<where>
+			<if test="meeting_class ! = null">
+				class_name = #{class_name}
+	</if>
+			<if test="meeting_tea ! = null">
+				class_head = #{class_head}
+	</if>
+		</where>
+	</select>
+	<!-- 插入信息 -->
+	<insert id="add_meeting" parameterType="entity.Meeting"
+		keyProperty="meeting_id">
+		insert into meeting(meeting_time,meeting_content,meeting_tea,meeting_class)
+		values(#{meeting_time},#{meeting_content},#{meeting_tea},#{meeting_class})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="update_meeting" parameterType="entity.Meeting">
+		update meeting
+		<set>
+			<if test="meeting_content ! = null">
+				meeting_content = #{meeting_content}
+      </if>
+			<if test="meeting_time ! = null">
+				meeting_time = #{meeting_time}
+      </if>
+		</set>
+		<where>
+			<if test="meeting_id ! = null">
+				meeting_id = #{meeting_id}
+     </if>
+		</where>
+	</update>
+</mapper>
